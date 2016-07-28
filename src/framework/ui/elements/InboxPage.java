@@ -11,31 +11,24 @@ import framework.exception.IllegalPageException;
 public class InboxPage 
 {
 	private final WebDriver webDriver;
-	
 	private final String title;
 	
-	By writeLetterButton = By.xpath("//div[contains(text(), 'НАПИСАТЬ')]");
+	private By writeLetterButton = By.xpath("//div[contains(text(), 'НАПИСАТЬ')]");
 	
-	By toWhomInput = By.xpath("//textarea[@name = 'to']");
-	By subjectInput = By.xpath("//input[@name = 'subjectbox']");
-	By messageInput = By.xpath("//div[@role = 'textbox']");
-	By sendLetterButton = By.xpath("//div[contains(text(), 'Отправить')]");
+	private By toWhomInput = By.xpath("//textarea[@name = 'to']");
+	private By subjectInput = By.xpath("//input[@name = 'subjectbox']");
+	private By messageInput = By.xpath("//div[@role = 'textbox']");
+	private By sendLetterButton = By.xpath("//div[contains(text(), 'Отправить')]");
 	
-	By selectLetterBox = By.xpath("//span[@role = 'checkbox']/div[@role='presentation']");
-	//By unreadListItem = By.xpath("//div[@role = 'menuitem'][@selector = 'unread']");
-	By reportSpamButton = By.xpath("//div[@aria-label = 'Report spam' or @aria-label = 'В спам!']");
-	By deleteButton = By.xpath("//div[@aria-label = 'Удалить']");
+	private By selectLetterBox = By.xpath("//span[@role = 'checkbox']/div[@role='presentation']");
+	private By reportSpamButton = By.xpath("//div[@aria-label = 'Report spam' or @aria-label = 'В спам!']");
+	private By deleteButton = By.xpath("//div[@aria-label = 'Удалить']");
 	
-	/*
-	By moreButton = By.xpath("//span[@role='button']/span[text()='More']");
-	By spamButton = By.xpath("//a[contains(text(), 'Spam')]");
-	*/
+	private By searchInput = By.xpath("//input[@aria-label='Поиск']");
+	private By searchButton =  By.xpath("//button[@aria-label='Поиск Gmail']");
 	
-	By searchInput = By.xpath("//input[@aria-label='Поиск']");
-	By searchButton =  By.xpath("//button[@aria-label='Поиск Gmail']");
-	
-	By accountsButton = By.xpath("//a[contains(@title, 'Аккаунт Google')]");
-	By exitButton = By.xpath("//a[text() = 'Выйти']");
+	private By accountsButton = By.xpath("//a[contains(@title, 'Аккаунт Google')]");
+	private By exitButton = By.xpath("//a[text() = 'Выйти']");
 	
 	private final String spamLetterXPathStart = "//span[@email='";
 	private final String spamLetterXPathEnd = "']";
@@ -91,4 +84,11 @@ public class InboxPage
 		webDriver.findElement(selectLetterBox).click();
 		webDriver.findElement(deleteButton).click();
 	}
+	
+	
+	/*
+	By moreButton = By.xpath("//span[@role='button']/span[text()='More']");
+	By spamButton = By.xpath("//a[contains(text(), 'Spam')]");
+	By unreadListItem = By.xpath("//div[@role = 'menuitem'][@selector = 'unread']");
+	*/
 }
