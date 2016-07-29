@@ -4,17 +4,21 @@ import java.util.ResourceBundle;
 
 public class AccountResourceManager
 {
-	private final static AccountResourceManager instance = new AccountResourceManager();
+	private static AccountResourceManager instance = null;
 	
 	private ResourceBundle bundle = ResourceBundle.getBundle("framework.configuration.accounts");
 	
 	public static AccountResourceManager getInstance()
 	{
+		if(instance==null)
+		{
+			instance = new AccountResourceManager();
+		}
 		return instance;
 	}
 	
-	public String getValue(String key)
+	public String getValue(Account key)
 	{
-		return bundle.getString(key);
+		return bundle.getString(key.toString().toLowerCase());
 	}
 }

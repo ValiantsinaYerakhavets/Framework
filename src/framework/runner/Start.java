@@ -22,13 +22,14 @@ public class Start
 			login.logIn("user1testmailbox@gmail.com", "user1testmailbox1111");
 			InboxPage inbox = new InboxPage(driver);
 			inbox.writeLetter("user2testmailbox@gmail.com", "test", "test");
-			*/
+			
 			
 			LoginPage login = new LoginPage(driver);
 			login.logIn("user2testmailbox@gmail.com", "user2testmailbox2222");
 			InboxPage inbox = new InboxPage(driver);
 			inbox.reportSpam();
 			inbox.checkSpam("user1testmailbox@gmail.com", "Name1 Surname1");
+			*/
 			
 		} 
 		catch (IllegalPageException e) {

@@ -1,94 +1,97 @@
 package framework.ui.elements;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import framework.exception.IllegalPageException;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class InboxPage 
 {
-	private final WebDriver webDriver;
-	private final String title;
+	private final static Logger LOG = LogManager.getRootLogger();
+	protected final WebDriver webDriver;
 	
-	private By writeLetterButton = By.xpath("//div[contains(text(), 'НАПИСАТЬ')]");
+	@FindBy(xpath = "//div[@aria-lable = 'Settings']")
+	protected WebElement settingsButton;
 	
-	private By toWhomInput = By.xpath("//textarea[@name = 'to']");
-	private By subjectInput = By.xpath("//input[@name = 'subjectbox']");
-	private By messageInput = By.xpath("//div[@role = 'textbox']");
-	private By sendLetterButton = By.xpath("//div[contains(text(), 'Отправить')]");
+	@FindBy(xpath = "//div[@role = 'menuitem']/div[text() = 'Settings']")
+	protected WebElement settingsMenuItem;
 	
-	private By selectLetterBox = By.xpath("//span[@role = 'checkbox']/div[@role='presentation']");
-	private By reportSpamButton = By.xpath("//div[@aria-label = 'Report spam' or @aria-label = 'В спам!']");
-	private By deleteButton = By.xpath("//div[@aria-label = 'Удалить']");
+	@FindBy(xpath = "//div[contains(text(), 'COMPOSE')]")
+	protected WebElement writeLetterButton;
 	
-	private By searchInput = By.xpath("//input[@aria-label='Поиск']");
-	private By searchButton =  By.xpath("//button[@aria-label='Поиск Gmail']");
+	@FindBy(xpath = "//span[@role = 'checkbox']/div[@role='presentation']")
+	protected WebElement selectLetterBox;
 	
-	private By accountsButton = By.xpath("//a[contains(@title, 'Аккаунт Google')]");
-	private By exitButton = By.xpath("//a[text() = 'Выйти']");
+	@FindBy(xpath = "//div[@aria-label = 'Report spam'")
+	protected WebElement reportSpamButton;
 	
-	private final String spamLetterXPathStart = "//span[@email='";
-	private final String spamLetterXPathEnd = "']";
+	@FindBy(xpath = "//div[@aria-label = 'Delete']")
+	protected WebElement deleteButton;
 	
-	public InboxPage(WebDriver webDriver) throws IllegalPageException
+	@FindBy(xpath = "//input[@aria-label='Search']")
+	protected WebElement searchInput;
+	
+	@FindBy(xpath = "//button[@aria-label='Search Gmail']")
+	protected WebElement searchButton;
+	
+	@FindBy(xpath = "//a[contains(@title, 'Google Account')]")
+	protected WebElement accountsButton;
+	
+	@FindBy(xpath = "//a[text() = 'Sign out']")
+	protected WebElement signOutButton;
+	
+	public InboxPage(WebDriver webDriver) 
 	{
 		this.webDriver = webDriver;
-		this.title = "@gmail.com - Gmail";
-		
-		System.out.println(webDriver.getTitle());
-		if(!webDriver.getTitle().contains(title))
-		{
-			throw new IllegalPageException("It's Not InboxPage!");
-		}
+		PageFactory.initElements(webDriver, this);
 	}
-	
-	public void writeLetter(String toWhom, String subject, String message)
-	{
-		webDriver.findElement(writeLetterButton).click();
-				
-		webDriver.findElement(toWhomInput).sendKeys(toWhom);
-		webDriver.findElement(subjectInput).sendKeys(subject);
-		webDriver.findElement(messageInput).sendKeys(message);
-		
-		webDriver.findElement(sendLetterButton).click();
-	}
-	
+
 	public void reportSpam()
 	{
-		webDriver.findElement(selectLetterBox).click();
-		webDriver.findElement(reportSpamButton).click();
-	}
-	
-	public boolean checkSpam(String email, String nameAndSurname)
-	{
-		webDriver.findElement(searchInput).sendKeys("in:spam");
-		webDriver.findElement(searchButton).click();
-		
-		List<WebElement> elems = webDriver.findElements(By.xpath(spamLetterXPathStart + email
-				+ "' and @name = '" +
-				nameAndSurname + spamLetterXPathEnd));
-		return (elems.size()!=0);
-	}
-	
-	public void logOut()
-	{
-		webDriver.findElement(accountsButton).click();
-		webDriver.findElement(exitButton).click();
+		selectLetterBox.click();
+		reportSpamButton.click();
+		LOG.info("Selecting all mails and marking it as spam");
 	}
 	
 	public void clearInbox()
 	{
-		webDriver.findElement(selectLetterBox).click();
-		webDriver.findElement(deleteButton).click();
+		selectLetterBox.click();
+		deleteButton.click();
+		LOG.info("Selecting all mails in the checkbox and deleting it");
 	}
 	
+	public void logOut()
+	{
+		accountsButton.click();
+		LOG.info("Clicking Accounts button");
+		signOutButton.click();
+		LOG.info("Clicking SignOut button");
+	}
 	
-	/*
-	By moreButton = By.xpath("//span[@role='button']/span[text()='More']");
-	By spamButton = By.xpath("//a[contains(text(), 'Spam')]");
-	By unreadListItem = By.xpath("//div[@role = 'menuitem'][@selector = 'unread']");
-	*/
+	//////////////////////////////////////////////////////////////////////
+	
+	public SpamPage goToSpam()
+	{
+		searchInput.sendKeys("in:spam");
+		searchButton.click();
+		
+		return new SpamPage(this.webDriver);
+	}
+	
+	public SendLetterPage goToSendLetter()
+	{
+		writeLetterButton.click();
+		
+		return new SendLetterPage(this.webDriver);
+	}
+	
+	public SettingsPage goToSettings()
+	{
+		settingsButton.click();
+		settingsMenuItem.click();
+		
+		return new SettingsPage(this.webDriver);
+	}
 }

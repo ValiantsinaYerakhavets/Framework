@@ -1,5 +1,5 @@
 package framework.runner.test;
 
-public class ForwardScenario {
+public class ForwardTest {
 
 }
