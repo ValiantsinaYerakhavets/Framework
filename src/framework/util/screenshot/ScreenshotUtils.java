@@ -1,4 +1,4 @@
-package framework.utils;
+package framework.util.screenshot;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class ScreenshotUtils
 	
 	public static String makeScreenshot(WebDriver driver)
 	{
-		ResourceBundle bundle = ResourceBundle.getBundle("framework.utils.path");
+		ResourceBundle bundle = ResourceBundle.getBundle("framework.util.properties");
 		String path = bundle.getString("path");
 		File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		try 

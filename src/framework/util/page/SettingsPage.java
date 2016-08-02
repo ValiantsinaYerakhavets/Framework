@@ -1,4 +1,4 @@
-package framework.ui.elements;
+package framework.util.page;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,7 +16,7 @@ public class SettingsPage extends InboxPage
 	@FindBy(xpath = "//a[contains(text(), 'Filters')]")
 	private WebElement filtersTab;
 	
-	////////////////////////////////////////////////////////////////////////////////////////
+	//-------------------------------------------------------------------------------------
 	
 	@FindBy(xpath = "//input[@value = 'Add a forwarding address']")
 	private WebElement addForwButton;

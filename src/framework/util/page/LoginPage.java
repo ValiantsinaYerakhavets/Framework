@@ -1,4 +1,4 @@
-package framework.ui.elements;
+package framework.util.page;
 
 import java.util.concurrent.TimeUnit;
 

@@ -1,4 +1,4 @@
-package framework.configuration;
+package framework.util.properties;
 
 import java.util.ResourceBundle;
 
@@ -6,7 +6,7 @@ public class ResourceManager
 {
 	private static ResourceManager instance = null;
 	
-	private ResourceBundle bundle = ResourceBundle.getBundle("framework.configuration.prop");
+	private ResourceBundle bundle = ResourceBundle.getBundle("framework.util.resources.account");
 	
 	public static ResourceManager getInstance()
 	{
@@ -17,12 +17,7 @@ public class ResourceManager
 		return instance;
 	}
 	
-	public String getValue(Account key)
-	{
-		return bundle.getString(key.toString().toLowerCase());
-	}
-	
-	public String getValue(Url key)
+	public String getValue(ResourceEnum key)
 	{
 		return bundle.getString(key.toString().toLowerCase());
 	}

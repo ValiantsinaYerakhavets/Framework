@@ -1,4 +1,4 @@
-package framework.ui.elements;
+package framework.util.page;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -71,6 +71,7 @@ public class InboxPage
 	public void chooseAccount()
 	{
 		accountChooser.click();
+		LOG.info("Clicking Choose account button");
 	}
 	
 	public final void reportSpam()
@@ -134,6 +135,7 @@ public class InboxPage
 	{
 		searchInput.sendKeys("in:spam");
 		searchButton.click();
+		LOG.info("Going to Spam folder");
 		
 		return new SpamPage(this.driver);
 	}
@@ -141,6 +143,7 @@ public class InboxPage
 	public SendLetterPage goToSendLetter()
 	{
 		writeLetterButton.click();
+		LOG.info("Going to Settings");
 		
 		return new SendLetterPage(this.driver);
 	}

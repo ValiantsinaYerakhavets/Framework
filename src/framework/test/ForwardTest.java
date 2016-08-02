@@ -1,10 +1,10 @@
-package framework.runner.test;
+package framework.test;
 
 import org.testng.annotations.Test;
 
-import framework.ui.elements.InboxPage;
-import framework.ui.elements.LoginPage;
-import framework.ui.elements.SettingsPage;
+import framework.util.page.InboxPage;
+import framework.util.page.LoginPage;
+import framework.util.page.SettingsPage;
 
 public class ForwardTest extends BaseTest
 {

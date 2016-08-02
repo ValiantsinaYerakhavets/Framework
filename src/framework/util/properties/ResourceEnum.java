@@ -1,6 +1,6 @@
-package framework.configuration;
+package framework.util.properties;
 
-public enum Account 
+public enum ResourceEnum 
 {
 	EMAIL1,
 	EMAIL2,
@@ -12,5 +12,8 @@ public enum Account
 	
 	FULLNAME1,
 	FUULNAME2,
-	FULLNAME3
+	FULLNAME3,
+
+	LOGIN,
+	SETTINGS
 }
