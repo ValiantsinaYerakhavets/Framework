@@ -1,22 +1,24 @@
 package framework.ui.elements;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class InboxPage 
 {
-	private final static Logger LOG = LogManager.getRootLogger();
-	protected final WebDriver webDriver;
+	private final static Logger LOG = LogManager.getLogger("eventLogger");
+	protected final WebDriver driver;
 	
-	@FindBy(xpath = "//div[@aria-lable = 'Settings']")
-	protected WebElement settingsButton;
-	
-	@FindBy(xpath = "//div[@role = 'menuitem']/div[text() = 'Settings']")
-	protected WebElement settingsMenuItem;
+	private String homeHandle;
 	
 	@FindBy(xpath = "//div[contains(text(), 'COMPOSE')]")
 	protected WebElement writeLetterButton;
@@ -42,32 +44,88 @@ public class InboxPage
 	@FindBy(xpath = "//a[text() = 'Sign out']")
 	protected WebElement signOutButton;
 	
+	@FindBy(xpath = "//a[contains(@id,'account-chooser')]")
+	protected WebElement accountChooser;
+	
+	@FindBy(xpath = "//a[@rel='noreferrer']")
+	protected WebElement forwLink;
+	
 	public InboxPage(WebDriver webDriver) 
 	{
-		this.webDriver = webDriver;
+		this.driver = webDriver;
 		PageFactory.initElements(webDriver, this);
 	}
 
-	public void reportSpam()
+	public void logOut()
+	{
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(accountsButton));
+		accountsButton.click();
+		LOG.info("Clicking Accounts button");
+		signOutButton.click();
+		LOG.info("Clicking SignOut button");
+				
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(accountChooser));
+		accountChooser.click();		
+	}
+	
+	public void chooseAccount()
+	{
+		accountChooser.click();
+	}
+	
+	public final void reportSpam()
 	{
 		selectLetterBox.click();
 		reportSpamButton.click();
 		LOG.info("Selecting all mails and marking it as spam");
 	}
 	
-	public void clearInbox()
+	public final void clearInbox()
 	{
 		selectLetterBox.click();
 		deleteButton.click();
 		LOG.info("Selecting all mails in the checkbox and deleting it");
 	}
 	
-	public void logOut()
+	public boolean letterPresent(String fromWhom)
 	{
-		accountsButton.click();
-		LOG.info("Clicking Accounts button");
-		signOutButton.click();
-		LOG.info("Clicking SignOut button");
+		LOG.info("Checking if letter from " + fromWhom + " is present");
+
+		String xPath = "//span[@name = '" + fromWhom + "']";
+		List<WebElement> elems = driver.findElements(By.xpath(xPath));
+		return (elems.size()!=0);
+	}
+	
+	public void readLetter(String fromWhom)
+	{
+		if(letterPresent(fromWhom))
+		{
+			LOG.info("Letter from " + fromWhom + " is present. Opening it");
+			
+			String xPath = "//span[@name = '" + fromWhom + "']";
+			driver.findElement(By.xpath(xPath)).click();
+		}
+	}
+	
+	/////////////////////////////////////////////////////////////////////////
+	
+	public void confirmForwarding(String fromWhom)
+	{
+		readLetter(fromWhom);
+		
+		LOG.info("Clicking link from the letter");
+		forwLink.click();
+		
+		LOG.info("Waiting page to load");
+		driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+		
+		switchToOtherHandle();
+		
+		driver.findElement(By.xpath("//input[@value='Confirm']")).click();
+		LOG.info("Clicking Confirm button");
+		driver.close();
+		
+		switchToHomeHandle();
 	}
 	
 	//////////////////////////////////////////////////////////////////////
@@ -77,21 +135,36 @@ public class InboxPage
 		searchInput.sendKeys("in:spam");
 		searchButton.click();
 		
-		return new SpamPage(this.webDriver);
+		return new SpamPage(this.driver);
 	}
 	
 	public SendLetterPage goToSendLetter()
 	{
 		writeLetterButton.click();
 		
-		return new SendLetterPage(this.webDriver);
+		return new SendLetterPage(this.driver);
 	}
 	
-	public SettingsPage goToSettings()
+	//////////////////////////////////////////////////////////////////////
+	
+	public void switchToOtherHandle()
 	{
-		settingsButton.click();
-		settingsMenuItem.click();
-		
-		return new SettingsPage(this.webDriver);
+		homeHandle = driver.getWindowHandle();
+		for(String winHandle : driver.getWindowHandles())
+		{
+			if(!winHandle.equals(homeHandle))
+		    {
+				driver.switchTo().window(winHandle);
+				LOG.info("Driver is switching to a new handle");
+		    	break;
+		    }
+		}
+	}
+	
+	public void switchToHomeHandle()
+	{
+		driver.switchTo().window(homeHandle);
+		LOG.info("Driver is returning to the main handle");
+		homeHandle = null;
 	}
 }

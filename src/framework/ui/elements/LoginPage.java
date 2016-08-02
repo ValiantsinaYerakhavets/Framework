@@ -9,12 +9,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import framework.exception.IllegalPageException;
-
 public class LoginPage 
 {
 	private final static Logger LOG = LogManager.getLogger("eventLogger");
-	private final WebDriver webDriver;
+	private final WebDriver driver;
 	
 	@FindBy(xpath = "//input[@id = 'Email']")
 	WebElement emailInput;
@@ -28,13 +26,13 @@ public class LoginPage
 	@FindBy(xpath = "//input[@id = 'signIn']")
 	WebElement signInButton;
 	
-	public LoginPage(WebDriver webDriver) throws IllegalPageException
+	public LoginPage(WebDriver driver)
 	{
-		this.webDriver = webDriver;
-		PageFactory.initElements(webDriver, this);
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
 	}
 	
-	public void logIn(String login, String password) throws InterruptedException
+	public InboxPage logIn(String login, String password) 
 	{
 		this.setLogin(login);
 		LOG.info("Setting login\t-\t" + login);
@@ -42,13 +40,15 @@ public class LoginPage
 		nextButton.click();
 		LOG.info("Clicking Next button");
 		
-		webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		this.setPassword(password);
 		LOG.info("Setting password\t-\t" + password);
 		
 		signInButton.click();
 		LOG.info("Clicking SignIn button");
+		
+		return new InboxPage(driver);
 	}
 	
 	private void setLogin(String email)

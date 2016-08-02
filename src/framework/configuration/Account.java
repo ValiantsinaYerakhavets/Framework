@@ -12,7 +12,5 @@ public enum Account
 	
 	FULLNAME1,
 	FUULNAME2,
-	FULLNAME3,
-	
-	URL
+	FULLNAME3
 }

@@ -31,6 +31,6 @@ public class SendLetterPage extends InboxPage
 		
 		sendLetterButton.click();
 		
-		return new InboxPage(this.webDriver);
+		return new InboxPage(this.driver);
 	}
 }

@@ -12,14 +12,12 @@ public class SpamPage extends InboxPage
 	{
 		super(webDriver);
 	}
-	
-	private String xPath;
-	
+		
 	public boolean checkSpam(String email, String nameAndSurname)
 	{
-		xPath = "//span[@email='" + email
+		String xPath = "//span[@email='" + email
 				+ "' and @name = '" + nameAndSurname + "']";
-		List<WebElement> elems = webDriver.findElements(By.xpath(xPath));
+		List<WebElement> elems = driver.findElements(By.xpath(xPath));
 		return (elems.size()!=0);
 	}
 }
