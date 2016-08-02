@@ -106,7 +106,10 @@ public class InboxPage
 			driver.findElement(By.xpath(xPath)).click();
 		}
 	}
-	
+
+	/**
+	 * WTF?
+     */
 	/////////////////////////////////////////////////////////////////////////
 	
 	public void confirmForwarding(String fromWhom)
@@ -127,9 +130,13 @@ public class InboxPage
 		
 		switchToHomeHandle();
 	}
-	
+
+
 	//////////////////////////////////////////////////////////////////////
-	
+
+	/**
+	 * Change method name
+     */
 	public SpamPage goToSpam()
 	{
 		searchInput.sendKeys("in:spam");

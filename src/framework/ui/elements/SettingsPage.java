@@ -15,6 +15,10 @@ public class SettingsPage extends InboxPage
 	
 	@FindBy(xpath = "//a[contains(text(), 'Filters')]")
 	private WebElement filtersTab;
+
+	/**
+	 *  Delete this slashes and write relative to this group message
+	 */
 	
 	////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -32,6 +36,10 @@ public class SettingsPage extends InboxPage
 	
 	@FindBy(xpath = "//button[@name = 'ok']")
 	private WebElement okButton;
+
+	/**
+	 * Same problem
+	 */
 	
 	//-------------------------------------------------------------------------------------
 	

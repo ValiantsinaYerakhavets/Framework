@@ -8,7 +8,11 @@ import framework.ui.elements.InboxPage;
 import framework.ui.elements.LoginPage;
 
 public class SpamTest extends BaseTest
-{	
+{
+
+	/**
+	 * Commented parts of code it test methods
+     */
 	 @Test(enabled = false)
 	  public void user1Test() throws InterruptedException 
 	  {

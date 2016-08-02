@@ -14,7 +14,7 @@ import framework.ui.elements.SettingsPage;
 public class BaseTest 
 {
 	protected WebDriver driver;
-	protected ResourceManager bundle = ResourceManager.getInstance();;
+	protected ResourceManager bundle = ResourceManager.getInstance();
 	
 	protected final String email1 = bundle.getValue(Account.EMAIL1);
 	protected final String email2 = bundle.getValue(Account.EMAIL2);
@@ -31,11 +31,16 @@ public class BaseTest
 	{
 		driver = WebDriverInstance.getInstance();
 	}
-	
+
+
+	/**
+	 * Use Debug mode to see final screen
+	 */
+
 	@AfterClass
 	public void tearDown()
 	{
-		//WebDriverInstance.closeDriver();
+		WebDriverInstance.closeDriver();
 	}
 	
 	public void getToLoginPage()

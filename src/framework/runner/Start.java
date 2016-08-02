@@ -7,7 +7,11 @@ import framework.ui.elements.InboxPage;
 import framework.ui.elements.LoginPage;
 import framework.ui.elements.SettingsPage;
 
-public class Start 
+public class Start
+
+		/**
+		 * Can't find any profit in this class
+		 */
 {
 	private final static String url = "https://mail.google.com";
 	
