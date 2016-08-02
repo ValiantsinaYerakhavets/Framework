@@ -14,7 +14,10 @@ import org.openqa.selenium.WebDriver;
 public class ScreenshotUtils 
 {
 	private final static Logger LOG = LogManager.getLogger("eventLogger");
-	
+
+	/**
+	 * Generate your path on runtime
+     */
 	public static String makeScreenshot(WebDriver driver)
 	{
 		ResourceBundle bundle = ResourceBundle.getBundle("framework.util.properties");

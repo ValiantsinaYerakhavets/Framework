@@ -8,6 +8,10 @@ public class WebDriverInstance
 	private static WebDriver instance = null;
 	
 	private WebDriverInstance() {}
+
+	/**
+	 * Add factory method wich will provide you browserType and configuration method to configure your browser window and timeouts
+     */
 	
 	public static WebDriver getInstance()
 	{
