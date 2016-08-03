@@ -1,4 +1,4 @@
-package framework.util.page;
+package framework.main.pages;
 
 import java.util.List;
 

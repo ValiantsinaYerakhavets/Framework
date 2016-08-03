@@ -1,16 +1,15 @@
-package framework.test;
+package test;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import framework.util.page.InboxPage;
-import framework.util.page.LoginPage;
-import framework.util.page.SendLetterPage;
-import framework.util.page.SpamPage;
+import framework.main.pages.InboxPage;
+import framework.main.pages.LoginPage;
+import framework.main.pages.SpamPage;
 
 public class SpamTest extends BaseTest
 {	
-	 @Test(enabled = false)
+	 @Test(enabled = true)
 	  public void user1Test() throws InterruptedException 
 	  {
 		 	this.getToLoginPage();
@@ -19,10 +18,9 @@ public class SpamTest extends BaseTest
 			login.logIn(email1, password1);
 			
 			InboxPage inbox = new InboxPage(driver);
-			SendLetterPage sendPage = inbox.goToSendLetter();
-			sendPage.sendLetter(email2, "test", "test");
+			inbox.writeLetter().sendLetter(email2, "test", "test", false);
 			
-			sendPage.logOut();
+			inbox.logOut();
 	  }
 	 
 	  @Test(dependsOnMethods = "user1Test")
@@ -34,9 +32,8 @@ public class SpamTest extends BaseTest
 			InboxPage inbox = new InboxPage(driver);
 			inbox.reportSpam();
 			
-			SpamPage spamPage = inbox.goToSpam();
+			SpamPage spamPage = inbox.spamFolder();
 			boolean isPresent = spamPage.checkSpam(email1, fullname1);
 			Assert.assertEquals(isPresent, true);
 	  }
-	  
 }

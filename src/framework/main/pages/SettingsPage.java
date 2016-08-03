@@ -1,4 +1,4 @@
-package framework.util.page;
+package framework.main.pages;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,17 +10,15 @@ public class SettingsPage extends InboxPage
 {
 	private final static Logger LOG = LogManager.getLogger("eventLogger");
 	
+	// settings tabs
+	
 	@FindBy(xpath = "//a[text() = 'Forwarding and POP/IMAP']")
 	private WebElement forwTab;
 	
 	@FindBy(xpath = "//a[contains(text(), 'Filters')]")
 	private WebElement filtersTab;
 
-	/**
-	 *  Delete this slashes and write relative to this group message
-	 */
-	
-	//-------------------------------------------------------------------------------------
+	// add forwarding address buttons and links
 	
 	@FindBy(xpath = "//input[@value = 'Add a forwarding address']")
 	private WebElement addForwButton;
@@ -37,11 +35,7 @@ public class SettingsPage extends InboxPage
 	@FindBy(xpath = "//button[@name = 'ok']")
 	private WebElement okButton;
 
-	/**
-	 * Same problem
-	 */
-	
-	//-------------------------------------------------------------------------------------
+	// creating new filter buttons and links
 	
 	@FindBy(xpath = "//tbody/tr[td/span[contains(text(), 'a copy')]]/td/input[@type='radio']")
 	private WebElement radioButton;

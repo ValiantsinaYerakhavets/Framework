@@ -1,12 +1,12 @@
-package framework.test;
+package test;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
-import framework.driverManager.driverConfiguration.WebDriverInstance;
-import framework.util.properties.ResourceEnum;
-import framework.util.properties.ResourceManager;
+import framework.main.drivermanager.driverconfiguration.WebDriverInstance;
+import framework.main.properties.ResourceEnum;
+import framework.main.properties.ResourceManager;
 
 public class BaseTest 
 {
@@ -32,7 +32,7 @@ public class BaseTest
 	@AfterClass
 	public void tearDown()
 	{
-		//WebDriverInstance.closeDriver();
+		WebDriverInstance.closeDriver();
 	}
 	
 	public void getToLoginPage()

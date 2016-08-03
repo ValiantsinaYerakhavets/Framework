@@ -1,4 +1,4 @@
-package framework.util.page;
+package framework.main.pages;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +26,7 @@ public class InboxPage
 	@FindBy(xpath = "//span[@role = 'checkbox']/div[@role='presentation']")
 	protected WebElement selectLetterBox;
 	
-	@FindBy(xpath = "//div[@aria-label = 'Report spam'")
+	@FindBy(xpath = "//div[@aria-label = 'Report spam']")
 	protected WebElement reportSpamButton;
 	
 	@FindBy(xpath = "//div[@aria-label = 'Delete']")
@@ -44,9 +44,6 @@ public class InboxPage
 	@FindBy(xpath = "//a[text() = 'Sign out']")
 	protected WebElement signOutButton;
 	
-	@FindBy(xpath = "//a[contains(@id,'account-chooser')]")
-	protected WebElement accountChooser;
-	
 	@FindBy(xpath = "//a[@rel='noreferrer']")
 	protected WebElement forwLink;
 	
@@ -56,6 +53,8 @@ public class InboxPage
 		PageFactory.initElements(webDriver, this);
 	}
 
+	// common methods 
+	
 	public void logOut()
 	{
 		(new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(accountsButton));
@@ -63,29 +62,6 @@ public class InboxPage
 		LOG.info("Clicking Accounts button");
 		signOutButton.click();
 		LOG.info("Clicking SignOut button");
-				
-		(new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(accountChooser));
-		accountChooser.click();		
-	}
-	
-	public void chooseAccount()
-	{
-		accountChooser.click();
-		LOG.info("Clicking Choose account button");
-	}
-	
-	public final void reportSpam()
-	{
-		selectLetterBox.click();
-		reportSpamButton.click();
-		LOG.info("Selecting all mails and marking it as spam");
-	}
-	
-	public final void clearInbox()
-	{
-		selectLetterBox.click();
-		deleteButton.click();
-		LOG.info("Selecting all mails in the checkbox and deleting it");
 	}
 	
 	public boolean letterPresent(String fromWhom)
@@ -107,13 +83,24 @@ public class InboxPage
 			driver.findElement(By.xpath(xPath)).click();
 		}
 	}
-
-	/**
-	 * WTF?
-     */
-	/////////////////////////////////////////////////////////////////////////
 	
-	public void confirmForwarding(String fromWhom)
+	public final void reportSpam()
+	{
+		selectLetterBox.click();
+		reportSpamButton.click();
+		LOG.info("Selecting all mails and marking it as spam");
+	}
+	
+	public final void clearInbox()
+	{
+		selectLetterBox.click();
+		deleteButton.click();
+		LOG.info("Selecting all mails in the checkbox and deleting it");
+	}
+	
+	// Forward test method
+	
+	public final void confirmForwarding(String fromWhom)
 	{
 		readLetter(fromWhom);
 		
@@ -132,13 +119,9 @@ public class InboxPage
 		switchToHomeHandle();
 	}
 
-
-	//////////////////////////////////////////////////////////////////////
-
-	/**
-	 * Change method name
-     */
-	public SpamPage goToSpam()
+	// go to...
+	
+	public SpamPage spamFolder()
 	{
 		searchInput.sendKeys("in:spam");
 		searchButton.click();
@@ -147,15 +130,15 @@ public class InboxPage
 		return new SpamPage(this.driver);
 	}
 	
-	public SendLetterPage goToSendLetter()
+	public SendLetterPage writeLetter()
 	{
 		writeLetterButton.click();
-		LOG.info("Going to Settings");
+		LOG.info("Clicking Compose button");
 		
 		return new SendLetterPage(this.driver);
 	}
 	
-	//////////////////////////////////////////////////////////////////////
+	// helpers
 	
 	public void switchToOtherHandle()
 	{

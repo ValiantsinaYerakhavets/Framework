@@ -1,4 +1,4 @@
-package framework.util.page;
+package framework.main.pages;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +26,9 @@ public class LoginPage
 	@FindBy(xpath = "//input[@id = 'signIn']")
 	WebElement signInButton;
 	
+	@FindBy(xpath = "//input[@id = 'PersistentCookie']")
+	WebElement forgetMeCheckBox;
+	
 	public LoginPage(WebDriver driver)
 	{
 		this.driver = driver;
@@ -44,6 +47,12 @@ public class LoginPage
 		
 		this.setPassword(password);
 		LOG.info("Setting password\t-\t" + password);
+		
+		if(forgetMeCheckBox.isSelected())
+		{
+			forgetMeCheckBox.click();
+			LOG.info("Clicking checkbox not to stay in");
+		}
 		
 		signInButton.click();
 		LOG.info("Clicking SignIn button");

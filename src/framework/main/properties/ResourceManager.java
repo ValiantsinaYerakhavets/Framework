@@ -1,4 +1,4 @@
-package framework.util.properties;
+package framework.main.properties;
 
 import java.util.ResourceBundle;
 
@@ -6,7 +6,7 @@ public class ResourceManager
 {
 	private static ResourceManager instance = null;
 	
-	private ResourceBundle bundle = ResourceBundle.getBundle("framework.util.resources.account");
+	private ResourceBundle bundle = ResourceBundle.getBundle("framework.resources.account");
 	
 	public static ResourceManager getInstance()
 	{

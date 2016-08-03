@@ -1,4 +1,4 @@
-package framework.util.properties;
+package framework.main.properties;
 
 public enum ResourceEnum 
 {

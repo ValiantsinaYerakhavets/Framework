@@ -1,10 +1,10 @@
-package framework.test;
+package test;
 
 import org.testng.annotations.Test;
 
-import framework.util.page.InboxPage;
-import framework.util.page.LoginPage;
-import framework.util.page.SettingsPage;
+import framework.main.pages.InboxPage;
+import framework.main.pages.LoginPage;
+import framework.main.pages.SettingsPage;
 
 public class ForwardTest extends BaseTest
 {
@@ -18,8 +18,8 @@ public class ForwardTest extends BaseTest
 		this.getToSettingsPage();
 		SettingsPage setPage = new SettingsPage(driver);
 		setPage.setForwardToUser(email3);
+		
 		setPage.logOut();
-		setPage.chooseAccount();
 	}
 	
 	@Test(dependsOnMethods = "setForwUser2")
@@ -42,6 +42,19 @@ public class ForwardTest extends BaseTest
 		SettingsPage setPage = new SettingsPage(driver);
 		setPage.chooseCopyOfIncoming();
 		setPage.createNewFilter(email1);
+		
+		inbox.logOut();
+	}
+	
+	@Test(dependsOnMethods = "createFilterUser2")
+	public void sendLettersUser1() 
+	{
+		this.getToLoginPage();
+		LoginPage login = new LoginPage(driver);
+		InboxPage inbox = login.logIn(email1, password1);
+
+		inbox.writeLetter().sendLetter(email2, "test", "without att", false);
+		inbox.writeLetter().sendLetter(email2, "test", "with att", true);
 		
 		inbox.logOut();
 	}
