@@ -12,6 +12,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Parameters;
+
+import framework.main.properties.ResourceEnum;
 
 public class InboxPage 
 {
@@ -136,6 +139,14 @@ public class InboxPage
 		LOG.info("Clicking Compose button");
 		
 		return new SendLetterPage(this.driver);
+	}
+	
+	public SettingsPage settingsPage(String settings)
+	{
+		driver.get(settings);
+		LOG.info("Going to settings");
+		
+		return new SettingsPage(this.driver);
 	}
 	
 	// helpers

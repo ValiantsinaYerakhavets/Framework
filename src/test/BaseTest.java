@@ -27,6 +27,7 @@ public class BaseTest
 	public void setUp()
 	{
 		driver = WebDriverInstance.getInstance();
+		WebDriverInstance.setStartConf();
 	}
 	
 	@AfterClass
@@ -38,10 +39,5 @@ public class BaseTest
 	public void getToLoginPage()
 	{
 		driver.get(bundle.getValue(ResourceEnum.LOGIN));
-	}
-	
-	public void getToSettingsPage()
-	{
-		driver.get(bundle.getValue(ResourceEnum.SETTINGS));
 	}
 }
