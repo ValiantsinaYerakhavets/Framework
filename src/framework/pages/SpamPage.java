@@ -1,4 +1,4 @@
-package framework.main.pages;
+package framework.pages;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ public class SpamPage extends InboxPage
 {
 	private final static Logger LOG = LogManager.getLogger("eventLogger");
 	
-	public SpamPage(WebDriver webDriver) 
+	public SpamPage(WebDriver driver) 
 	{
-		super(webDriver);
+		super(driver);
 	}
 		
 	public boolean checkSpam(String email, String nameAndSurname)

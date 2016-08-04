@@ -1,4 +1,4 @@
-package framework.main.listeners;
+package framework.listeners;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,27 +12,26 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 
-import framework.main.drivermanager.driverconfiguration.WebDriverInstance;
+import framework.drivermanager.driverconfiguration.WebDriverInstance;
 
-public class MakingScreenshotListener extends TestListenerAdapter
+public class ScreenshotListener extends TestListenerAdapter
 {
 	private final static Logger LOG = LogManager.getLogger("eventLogger");
 
 	@Override
-	//@Parameters("path")
 	public void onTestFailure(ITestResult tr)
 	{
 		WebDriver driver = WebDriverInstance.getInstance();
 		
-		String screenshot = this.makeScreenshot(driver);
+		this.makeScreenshot(driver);
 
-		LOG.info("Screenshot captured. Saved in " + screenshot);
+		LOG.info("Screenshot captured");
 	}
 	
-	public String makeScreenshot(WebDriver driver)
+	public void makeScreenshot(WebDriver driver)
 	{
 		File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-		String path = "C://Users//Valiantsina_Yerakhavets@epam.com//Tasks//Framework//screens//";
+		String path = ".//screens//";
 		String name = scrFile.getName();
 		try 
 		{
@@ -42,6 +41,5 @@ public class MakingScreenshotListener extends TestListenerAdapter
 		{
 			LOG.error(e.getStackTrace());
 		}
-		return path;
 	}
 }

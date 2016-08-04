@@ -1,62 +1,50 @@
 package test;
 
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import framework.main.pages.InboxPage;
-import framework.main.pages.LoginPage;
-import framework.main.pages.SettingsPage;
+import framework.pages.InboxPage;
+import framework.pages.SettingsPage;
 
 public class ForwardTest extends BaseTest
 {
-	@Parameters({"settings"})
-	@Test
-	public void setForwUser2(String settings) 
+	@Test(enabled = false, description = "Not finished yet")
+	public void setForwUser2() 
 	{
-		this.getToLoginPage();
-		LoginPage login = new LoginPage(driver);
-		InboxPage inboxPage = login.logIn(email2, password2);
+		InboxPage inboxPage = loginPage.logIn(EMAIL2, PASSWORD2);
 
-		SettingsPage setPage = inboxPage.settingsPage(settings);
-		setPage.setForwardToUser(email3);
+		SettingsPage setPage = inboxPage.settingsPage();
+		setPage.setForwardToUser(EMAIL3);
 		
-		setPage.logOut();
+		loginPage = setPage.logOut();
 	}
-	
+
 	@Test(dependsOnMethods = "setForwUser2")
 	public void confirmForwUser3() 
 	{
-		LoginPage login = new LoginPage(driver);
-		InboxPage inbox = login.logIn(email3, password3);
+		InboxPage inboxPage = loginPage.logIn(EMAIL3, PASSWORD3);
 
-		inbox.confirmForwarding("Gmail Team");
-		inbox.logOut();
+		inboxPage.confirmForwarding("Gmail Team");
+		loginPage = inboxPage.logOut();
 	}
 	
-	@Parameters({"settings"})
 	@Test(dependsOnMethods = "confirmForwUser3")
-	public void createFilterUser2(String settings) 
+	public void createFilterUser2() 
 	{
-		LoginPage login = new LoginPage(driver);
-		InboxPage inbox = login.logIn(email2, password2);
+		InboxPage inboxPage = loginPage.logIn(EMAIL2, PASSWORD2);
 
-		SettingsPage setPage = inbox.settingsPage(settings);
+		SettingsPage setPage = inboxPage.settingsPage();
 		setPage.chooseCopyOfIncoming();
-		setPage.createNewFilter(email1);
+		setPage.createNewFilter(EMAIL1);
 		
-		inbox.logOut();
+		loginPage = inboxPage.logOut();
 	}
 	
 	@Test(dependsOnMethods = "createFilterUser2")
 	public void sendLettersUser1() 
 	{
-		this.getToLoginPage();
-		LoginPage login = new LoginPage(driver);
-		InboxPage inbox = login.logIn(email1, password1);
+		InboxPage inboxPage = loginPage.logIn(EMAIL1, PASSWORD1);
 
-		inbox.writeLetter().sendLetter(email2, "test", "without att", false);
-		inbox.writeLetter().sendLetter(email2, "test", "with att", true);
-		
-		inbox.logOut();
+		inboxPage.writeLetter().sendLetter(EMAIL2, "test", "without att", false);
+		inboxPage.writeLetter().sendLetter(EMAIL2, "test", "with att", true);
 	}
 }

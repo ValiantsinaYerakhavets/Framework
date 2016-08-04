@@ -1,4 +1,4 @@
-package framework.main.pages;
+package framework.pages;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -9,17 +9,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.Parameters;
 
-import framework.main.properties.ResourceEnum;
-
-public class InboxPage 
+public class InboxPage extends BasePage
 {
 	private final static Logger LOG = LogManager.getLogger("eventLogger");
-	protected final WebDriver driver;
 	
 	private String homeHandle;
 	
@@ -48,23 +43,24 @@ public class InboxPage
 	protected WebElement signOutButton;
 	
 	@FindBy(xpath = "//a[@rel='noreferrer']")
-	protected WebElement forwLink;
+	private WebElement forwLink;
 	
 	public InboxPage(WebDriver webDriver) 
 	{
-		this.driver = webDriver;
-		PageFactory.initElements(webDriver, this);
+		super(webDriver);
 	}
 
 	// common methods 
 	
-	public void logOut()
+	public LoginPage logOut()
 	{
 		(new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(accountsButton));
 		accountsButton.click();
 		LOG.info("Clicking Accounts button");
 		signOutButton.click();
 		LOG.info("Clicking SignOut button");
+		
+		return new LoginPage(this.driver);
 	}
 	
 	public boolean letterPresent(String fromWhom)
@@ -141,9 +137,10 @@ public class InboxPage
 		return new SendLetterPage(this.driver);
 	}
 	
-	public SettingsPage settingsPage(String settings)
+	public SettingsPage settingsPage()
 	{
-		driver.get(settings);
+		String url = driver.getCurrentUrl().replace("inbox", "settings");
+		driver.get(url);
 		LOG.info("Going to settings");
 		
 		return new SettingsPage(this.driver);

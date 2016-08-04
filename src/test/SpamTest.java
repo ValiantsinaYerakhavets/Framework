@@ -1,39 +1,32 @@
 package test;
 
 import org.testng.Assert;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import framework.main.pages.InboxPage;
-import framework.main.pages.LoginPage;
-import framework.main.pages.SpamPage;
+import framework.pages.InboxPage;
+import framework.pages.SpamPage;
 
 public class SpamTest extends BaseTest
 {	
 	 @Test(enabled = true)
 	  public void user1Test() throws InterruptedException 
 	  {
-		 	this.getToLoginPage();
-		 	
-		 	LoginPage login = new LoginPage(driver);
-			login.logIn(email1, password1);
+			InboxPage inboxPage = loginPage.logIn(EMAIL1, PASSWORD1);
+			inboxPage.writeLetter().sendLetter(EMAIL2, "test", "test", false);
 			
-			InboxPage inbox = new InboxPage(driver);
-			inbox.writeLetter().sendLetter(email2, "test", "test", false);
-			
-			inbox.logOut();
+			loginPage = inboxPage.logOut();
 	  }
 	 
+	 @Parameters("name")
 	  @Test(dependsOnMethods = "user1Test")
-	  public void user2Test() throws InterruptedException
+	  public void user2Test(String name) throws InterruptedException
 	  {
-		  	LoginPage login = new LoginPage(driver);
-			login.logIn(email2, password2);
+			InboxPage inboxPage = loginPage.logIn(EMAIL2, PASSWORD2);
+			inboxPage.reportSpam();
 			
-			InboxPage inbox = new InboxPage(driver);
-			inbox.reportSpam();
-			
-			SpamPage spamPage = inbox.spamFolder();
-			boolean isPresent = spamPage.checkSpam(email1, fullname1);
+			SpamPage spamPage = inboxPage.spamFolder();
+			boolean isPresent = spamPage.checkSpam(EMAIL1, name);
 			Assert.assertEquals(isPresent, true);
 	  }
 }

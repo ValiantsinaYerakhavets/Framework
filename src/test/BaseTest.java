@@ -4,40 +4,41 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
-import framework.main.drivermanager.driverconfiguration.WebDriverInstance;
-import framework.main.properties.ResourceEnum;
-import framework.main.properties.ResourceManager;
+import framework.drivermanager.driverconfiguration.WebDriverInstance;
+import framework.pages.BasePage;
+import framework.pages.LoginPage;
+import framework.properties.PropertyProvider;
 
 public class BaseTest 
 {
 	protected WebDriver driver;
-	protected ResourceManager bundle = ResourceManager.getInstance();;
 	
-	protected final String email1 = bundle.getValue(ResourceEnum.EMAIL1);
-	protected final String email2 = bundle.getValue(ResourceEnum.EMAIL2);
-	protected final String email3 = bundle.getValue(ResourceEnum.EMAIL3);
+	protected BasePage basePage;
+	protected LoginPage loginPage;
 	
-	protected final String password1 = bundle.getValue(ResourceEnum.PASSWORD1);
-	protected final String password2 = bundle.getValue(ResourceEnum.PASSWORD2);
-	protected final String password3 = bundle.getValue(ResourceEnum.PASSWORD3);
+	protected final String EMAIL1 = PropertyProvider.getProperty("account", "email1");
+	protected final String EMAIL2 = PropertyProvider.getProperty("account", "email2");
+	protected final String EMAIL3 = PropertyProvider.getProperty("account", "email3");
 	
-	protected final String fullname1 = bundle.getValue(ResourceEnum.FULLNAME1);
+	protected final String PASSWORD1 = PropertyProvider.getProperty("account", "password1");
+	protected final String PASSWORD2 = PropertyProvider.getProperty("account", "password2");
+	protected final String PASSWORD3 = PropertyProvider.getProperty("account", "password3");
 	
 	@BeforeClass
 	public void setUp()
 	{
 		driver = WebDriverInstance.getInstance();
 		WebDriverInstance.setStartConf();
+	
+		basePage = new BasePage(driver);
+		loginPage = basePage.getToLoginPage();
 	}
 	
 	@AfterClass
 	public void tearDown()
 	{
 		WebDriverInstance.closeDriver();
-	}
-	
-	public void getToLoginPage()
-	{
-		driver.get(bundle.getValue(ResourceEnum.LOGIN));
+		basePage = null;
+		loginPage = null;
 	}
 }
