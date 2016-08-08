@@ -1,10 +1,12 @@
 package test;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 import framework.drivermanager.driverconfiguration.WebDriverInstance;
+import framework.listeners.DriverListener;
 import framework.pages.BasePage;
 import framework.pages.LoginPage;
 import framework.properties.PropertyProvider;
@@ -28,6 +30,10 @@ public class BaseTest
 	public void setUp()
 	{
 		driver = WebDriverInstance.getInstance();
+		 EventFiringWebDriver efwd = new EventFiringWebDriver(driver);
+         DriverListener eventListener = new DriverListener(efwd);
+         efwd.register(eventListener);
+         driver = efwd;
 		WebDriverInstance.setStartConf();
 	
 		basePage = new BasePage(driver);
