@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+  
+<suite name="Spaghetti" verbose="1" >
+	<listeners>
+		<listener class-name="framework.listeners.ScreenshotListener" />
+	</listeners>
+	<parameter name="name" value="Name1 Surname1" />
+	
+	<test name="Spam">
+		<classes>
+			<class name="test.suite.SpamTest" />
+		</classes>
+	</test>
+	<test name="Forward">
+		<classes>
+			<class name="test.suite.ForwardTest" />
+		</classes>
+	</test>
+</suite>

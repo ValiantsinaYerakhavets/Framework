@@ -1,0 +1,19 @@
+<configuration>
+  <appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+     	<PatternLayout pattern="%d{yyyy-mm-dd HH:mm:ss} [%t] %-5level (%F : %L) - %msg%n"/>
+    </Console>
+    <File name="logFile" fileName="report.log">
+        <PatternLayout pattern="%d{yyyy-mm-dd HH:mm:ss} [%t] %-5level (%F : %L) - %msg%n"/>
+    </File>             
+  </appenders>
+
+  <loggers>  
+ 	<logger name="eventLogger" level="all">
+      <appenderRef ref="Console"/>
+      <appenderRef ref="logFile"/>
+    </logger>   
+    <root level="error">
+    </root>   
+  </loggers>
+</configuration>

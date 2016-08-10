@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+  
+<suite name="Test" verbose="1" >
+	<listeners>
+		<listener class-name="framework.listeners.ScreenshotListener" />
+	</listeners>
+
+	<test name="Debug">
+		<classes>
+			<class name="test.DebugTest" />
+		</classes>
+	</test>
+</suite>
